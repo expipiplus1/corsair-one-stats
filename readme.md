@@ -14,19 +14,20 @@ GPU Coolant : 39.99 °C
 Development was done by reverse engineering the usb traffic sent from the
 "iCue" software running in a Windows 10 VM.
 
+## *Important Notes*
+
+In developing this (specifically experimenting with different commands than
+0x3f) I managed to get my fan stuck at 173 RPM, not even power cycling can fix
+this. Disconnecting the PWM pin on the fan has made the computer usable again
+by causing the fan to run at full speed, oops!
+
+Please keep a careful eye on the component temperatures while running this! I
+have only an educated guess about what it's doing! I'm pretty sure that it's
+just fetching data and isn't influencing any state on the device, but who knows
+for sure.
+
 Note that the system will stop the fan when things are cool, i.e. 0 RPM is a
 valid speed.
-
-It seems that the `vendor:product` id matches that of the "H110i Pro" which is
-supported by [OpenCorsairLink](https://github.com/audiohacked/OpenCorsairLink).
-Despite being the same USB device the firmware is different and it is not
-compatible with OpenCorsairLink (see
-[here](https://github.com/audiohacked/OpenCorsairLink/issues/220#issue-543176212)
-and
-[here](https://github.com/audiohacked/OpenCorsairLink/issues/160#issue-425542928)).
-Having said that a couple of people [have had success with
-OpenCorsairLink](https://github.com/audiohacked/OpenCorsairLink/issues/109#issuecomment-435685582),
-this didn't seem to work on my machine.
 
 ## The protocol
 
@@ -77,3 +78,17 @@ ascending effectiveness)
 - Running iCue with the device connected
 - Power cycling the device
   - `rtcwake --seconds 6; systemctl suspend`
+
+## See also
+
+It seems that the `vendor:product` id matches that of the "H110i Pro" which is
+supported by [OpenCorsairLink](https://github.com/audiohacked/OpenCorsairLink).
+Despite being the same USB device the firmware is different and it is not
+compatible with OpenCorsairLink (see
+[here](https://github.com/audiohacked/OpenCorsairLink/issues/220#issue-543176212)
+and
+[here](https://github.com/audiohacked/OpenCorsairLink/issues/160#issue-425542928)).
+Having said that a couple of people [have had success with
+OpenCorsairLink](https://github.com/audiohacked/OpenCorsairLink/issues/109#issuecomment-435685582),
+this didn't seem to work on my machine.
+
