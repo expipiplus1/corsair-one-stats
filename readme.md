@@ -14,6 +14,9 @@ GPU Coolant : 39.99 °C
 Development was done by reverse engineering the usb traffic sent from the
 "iCue" software running in a Windows 10 VM.
 
+Note that the system will stop the fan when things are cool, i.e. 0 RPM is a
+valid speed.
+
 It seems that the `vendor:product` id matches that of the "H110i Pro" which is
 supported by [OpenCorsairLink](https://github.com/audiohacked/OpenCorsairLink).
 Despite being the same USB device the firmware is different and it is not
