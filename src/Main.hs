@@ -39,7 +39,7 @@ go dev = do
         traverse_
           (\i ->
             print i >> poll (B.singleton (fromInteger i)) devHndl >> threadDelay
-              30000
+              1000000
           )
           [0, 8 ..]
 
