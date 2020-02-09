@@ -4,10 +4,12 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b4d87760a0ec9c73741a676b77c82988e14861ced10b591f2725bd256f047f9c
+-- hash: bba2d68c55cd6fe403a02a1a513f83f72defd181dabd19aba98f441ba3f416dd
 
 name:           corsair-one-stats
 version:        0.0.0
+license:        MIT
+license-file:   LICENSE
 build-type:     Simple
 
 executable c1
