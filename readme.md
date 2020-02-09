@@ -29,10 +29,10 @@ this didn't seem to work on my machine.
 
 The core of things is that the host sends a 64B `SET_REPORT` packet, asking for
 report type `2`, id `0`. This packet always starts with the byte `0x3f`, then a
-counter which *tends* to increase by 8 each time, then another byte which
-changes every time. It ends with a byte which changes every time, and the space
-in between is filled with some "low entropy" bytes, i.e. all zeros, or
-incrementing values (the alphabet appears sometimes) or all 0xff or 0x7f.
+counter which *tends* to increase by about 8 each time. The rest of the payload
+is filled with some "low entropy" bytes, i.e. all zeros, or incrementing values
+(the alphabet appears sometimes) or all 0xff or 0x7f. It ends in a CRC-8
+checksum of the counter and the garbage bytes (everything except the 0x3f).
 
 The response comes as a 64B `URB_INTERRUPT` packet. The speeds are in RPM and
 the temperatures are in 256ths of a degree, all 2B in size

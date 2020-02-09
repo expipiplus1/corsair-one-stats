@@ -4,22 +4,23 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b2d8fca395b26ae3448154b3dd39526a703532ccefce31c8ed25e4cdfa033c71
+-- hash: b4d87760a0ec9c73741a676b77c82988e14861ced10b591f2725bd256f047f9c
 
-name:           corsair-one
+name:           corsair-one-stats
 version:        0.0.0
 build-type:     Simple
 
 executable c1
   main-is: Main.hs
   other-modules:
-      Paths_corsair_one
+      Paths_corsair_one_stats
   hs-source-dirs:
       src
   ghc-options: -threaded -Wall
   build-depends:
       base
     , bytestring
+    , crc
     , text
     , usb
     , vector

@@ -11,11 +11,13 @@ import           System.IO
 import           Text.Printf
 import qualified Data.ByteString               as B
 import qualified Data.Text                     as T
-import qualified Data.Text.IO                     as T
+import qualified Data.Text.IO                  as T
 import qualified Data.Text.Encoding            as T
 import qualified Data.Vector                   as V
 import           System.USB
 import           Control.Monad
+import           Data.Digest.CRC
+import           Data.Digest.CRC8
 
 main :: IO ()
 main = do
@@ -34,7 +36,12 @@ go dev = do
       withClaimedInterface devHndl 0 $ do
         initialize devHndl
         putStrLn "initialized"
-        forever (poll (B.pack [0x10, 0xff]) (B.pack [0x5b]) devHndl >> threadDelay 1000000)
+        traverse_
+          (\i ->
+            print i >> poll (B.singleton (fromInteger i)) devHndl >> threadDelay
+              30000
+          )
+          [0, 8 ..]
 
 -- | Mimic pretty much what iCue does
 initialize :: DeviceHandle -> IO ()
@@ -80,20 +87,17 @@ initialize devHandle = do
 
 -- | Send a `0x3f` packet with payload of prefixNonsense, 0, suffixNonsense and
 -- print out the returned data.
-poll :: B.ByteString -> B.ByteString -> DeviceHandle -> IO ()
-poll prefixNonsense suffixNonsense devHandle = do
-  let setReport = 0x09
-      reportType = 0x02
+poll :: B.ByteString -> DeviceHandle -> IO ()
+poll prefixNonsense devHandle = do
+  let
+    setReport  = 0x09
+    reportType = 0x02
+    payload =
+      prefixNonsense <> B.replicate (64 - 1 - B.length prefixNonsense - 1) 0x00
   writeControlExact
     devHandle
     (ControlSetup Class ToInterface setReport (reportType `shiftL` 8) 0)
-    (  B.singleton 0x3f
-    <> prefixNonsense
-    <> B.replicate
-         (64 - 1 - B.length prefixNonsense - B.length suffixNonsense)
-         0x00
-    <> suffixNonsense
-    )
+    (B.singleton 0x3f <> payload <> B.singleton (crc8 (digest payload)))
     1000
   (b, _) <- readInterrupt devHandle (EndpointAddress 1 In) 64 1000
   printf "Fan Speed   : %d RPM\n" (bsWord16 0x0f b)
