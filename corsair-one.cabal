@@ -1,0 +1,26 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: b2d8fca395b26ae3448154b3dd39526a703532ccefce31c8ed25e4cdfa033c71
+
+name:           corsair-one
+version:        0.0.0
+build-type:     Simple
+
+executable c1
+  main-is: Main.hs
+  other-modules:
+      Paths_corsair_one
+  hs-source-dirs:
+      src
+  ghc-options: -threaded -Wall
+  build-depends:
+      base
+    , bytestring
+    , text
+    , usb
+    , vector
+  default-language: Haskell2010

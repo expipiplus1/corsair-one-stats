@@ -1,0 +1,12 @@
+name: corsair-one-stats
+source-dirs: src
+ghc-options: -threaded -Wall
+executables:
+  c1:
+    main: Main.hs
+    dependencies:
+    - base
+    - bytestring
+    - text
+    - usb
+    - vector
