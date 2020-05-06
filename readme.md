@@ -16,8 +16,7 @@ Development was done by reverse engineering the usb traffic sent from the
 
 ## *Important Notes*
 
-In developing this (specifically experimenting with different commands than
-0x3f) I managed to get my fan stuck at 173 RPM, not even power cycling can fix
+In developing this I managed to get my fan stuck at 173 RPM, not even power cycling can fix
 this. Disconnecting the PWM pin on the fan has made the computer usable again
 by causing the fan to run at full speed, oops!
 
@@ -32,7 +31,7 @@ valid speed.
 ## The protocol
 
 The core of things is that the host sends a 64B `SET_REPORT` packet, asking for
-report type `2`, id `0`. This packet always starts with the byte `0x3f`, then a
+report type `2`, id `0`. This packet always starts with the byte `0x3f` (packet length probably), then a
 counter which *tends* to increase by about 8 each time. The rest of the payload
 is filled with some "low entropy" bytes, i.e. all zeros, or incrementing values
 (the alphabet appears sometimes) or all 0xff or 0x7f. It ends in a CRC-8
